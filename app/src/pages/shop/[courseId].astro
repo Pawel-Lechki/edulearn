@@ -1,0 +1,48 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Course from "../../components/Course";
+
+export async function getStaticPaths() {
+  return [
+      { params: { courseId: "1" } },
+      { params: { courseId: "2" } },
+      { params: { courseId: "3" } },
+      { params: { courseId: "4" } },
+      { params: { courseId: "5" } },
+      { params: { courseId: "6" } },
+      { params: { courseId: "7" } },
+      { params: { courseId: "8" } },
+    ]
+}
+
+const { courseId } = Astro.params;
+
+const response = await fetch(`http://localhost:8080/api/courses/${courseId}`);
+const courseData = await response.json();
+
+
+// const courseData = {
+//   id: 1,
+//   title: "Kurs React",
+//   price: 199,
+//   description: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc,",
+//   imageUrl: null,
+//   topics: ["New", "React"],
+// };
+---
+
+<Layout title={courseData.title} description={courseData.title} >
+  <div class="lg:container mx-auto w-full lg:px-0 px-5">
+    <!-- <h2>{courseId}</h2> -->
+     <!-- <pre>{JSON.stringify(data)}</pre> -->
+    {
+      courseData ? 
+      (
+        <Course course={courseData} client:load/>
+      ) : 
+      (
+        <p>Kurs nie znaleziony</p>
+      )
+    }
+  </div>
+</Layout>

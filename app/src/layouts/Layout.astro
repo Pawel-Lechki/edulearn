@@ -1,0 +1,59 @@
+---
+import Background from '../components/Background';
+import Header from '../components/Header';
+import logo from '../assets/astro.svg';
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const {title, description} = Astro.props;
+const {pathname} = Astro.url;
+---
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content={description || "Platforma kursów"} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title || "Platforma kursów"}</title>
+	</head>
+	<body class="relative text-text bg-[#FFF7F0] min-h-[200vh]">
+		<Header client:only />
+		
+		<slot />
+		{
+      pathname === "/cart" ||
+      pathname === "/checkout" ||
+      pathname.startsWith("/order") ? null : (
+        <div class="absolute inset-0 w-full h-full -z-10">
+          <Background />
+        </div>
+      )
+    }
+		
+		<footer class="container mt-40 mx-auto pb-10">
+      <div class="flex mt-10  w-full text-center justify-end">
+        <div class="flex items-center gap-1 mt-10">
+          <img src={logo.src} alt="Crystallize" class="w-5" />
+          Powered by <a href="https://crystallize.com" class="underline">
+            Crystallize</a
+          > + <a href="https://astro.build" class="underline">Astro</a>
+        </div>
+      </div>
+    </footer>
+		<style is:global>
+			.bg-fixed {
+				background-attachment: scroll;
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover;
+			}
+		</style>
+	</body>
+</html>
+
+

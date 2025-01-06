@@ -1,0 +1,66 @@
+---
+import Layout from "../layouts/Layout.astro";
+import loginImage from "../assets/login.svg";
+import LoginForm from "../components/LoginForm";
+
+// let error = '';
+
+// if (Astro.request.method === 'POST') {
+//   const data = await Astro.request.formData();
+//   const email = data.get('email');
+//   const password = data.get('password');
+
+//   const response = await fetch('http://localhost:8080/api/users/auth', {
+//     method: 'POST',
+//     headers: {
+//       "Content-Type": "multipart/form-data"
+//     },
+//     body: JSON.stringify({ email, password })
+//   });
+
+//   if (response.ok) {
+//     // luka: rola uzytkownika zakodowana w tokenie bez szyfrowania
+//     const user = await response.json();
+//     const token = Buffer.from(`${user.id}:${user.role}:${Date.now()}`).toString('base64');
+
+//     Astro.cookies.set('session', token, {
+//       secure: false,
+//       sameSite: "lax",
+//       path: "/"
+//     })
+
+//     // luka: ujawnia role w url
+//     return Astro.redirect(`/dashboard/${user.role}`);
+//   }
+
+//     error = "Nieprawidłowy email lub hasło";
+// }
+---
+<Layout title="Logowanie" description="Logowanie do platformy kursów">
+  <div class="container mx-auto p-4 mt-20">
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <img class="h-auto max-w-full rounded-lg" src={loginImage.src} alt="">
+    </div>
+    <div class="flex flex-col justify-center text-center">
+      <h3 class="text-5xl font-bold mb-10">Zaloguj się, aby kontunuowac przygodę z nauką</h3>
+      <!-- <form method="POST">
+        {error && <p class="text-red-500 text-xl">{error}</p>}
+        <div class="mb-4">
+          <input type="email" placeholder="Email" class="w-full p-4 border border-gray-300 rounded-lg text-xl">
+        </div>
+        <div class="mb-4">
+          <input type="password" placeholder="Haslo" class="w-full p-4 border border-gray-300 rounded-lg text-xl">
+        </div>
+        <div class="mb-4">
+          <button class="w-full p-4 bg-buttonSecondary text-white rounded-lg text-xl">Zaloguj</button>
+        </div>
+        <div class="mt-20 bg-background2 p-4 rounded-lg">
+          <p class="text-xl">Nie masz konta? <a href="/register" class="text-blue-500 text-xl underline">Zarejestruj się</a></p>
+        </div>   -->
+        <LoginForm client:only />
+      </form>
+    </div>
+  </div>
+  </div>
+</Layout>

@@ -1,0 +1,36 @@
+---
+import RelatedCoursesComponent from './RelatedCourses'
+const products = [
+  {
+    id: 1,
+    title: 'Kurs 1',
+    description: 'Opis kursu 1',
+    imageUrl: 'https://via.placeholder.com/150',
+    price: 100,
+    topics: ['Kategoria 1', 'Kategoria 2'],
+  },
+  {
+    id: 2,
+    title: 'Kurs 2',
+    description: 'Opis kursu 2',
+    imageUrl: 'https://via.placeholder.com/150',
+    price: 200,
+    topics: ['Kategoria 3', 'Kategoria 4'],
+  },
+  {
+    id: 3,
+    title: 'Kurs 3',
+    description: 'Opis kursu 3',
+    imageUrl: 'https://via.placeholder.com/150',
+    price: 300,
+    topics: ['Kategoria 5', 'Kategoria 6'],
+  },
+];
+
+const courses = Astro.props.courses;
+---
+
+
+
+<h3 class="text-xl font-semibold p-2 my-5">Nasze pozostale kursy:</h3>
+<RelatedCoursesComponent courses={courses} client:only/>

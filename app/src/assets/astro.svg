@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   fill="none"
+   width="115"
+   height="48"
+   version="1.1"
+   id="svg194"
+   sodipodi:docname="astro.svg"
+   inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview196"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="7.4869565"
+     inkscape:cx="103.17944"
+     inkscape:cy="3.0052265"
+     inkscape:window-width="2084"
+     inkscape:window-height="1205"
+     inkscape:window-x="51"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg194" />
+  <path
+     fill="#17191E"
+     d="M7.77 36.35C6.4 35.11 6 32.51 6.57 30.62c.99 1.2 2.35 1.57 3.75 1.78 2.18.33 4.31.2 6.33-.78.23-.12.44-.27.7-.42.18.55.23 1.1.17 1.67a4.56 4.56 0 0 1-1.94 3.23c-.43.32-.9.61-1.34.91-1.38.94-1.76 2.03-1.24 3.62l.05.17a3.63 3.63 0 0 1-1.6-1.38 3.87 3.87 0 0 1-.63-2.1c0-.37 0-.74-.05-1.1-.13-.9-.55-1.3-1.33-1.32a1.56 1.56 0 0 0-1.63 1.26c0 .06-.03.12-.05.2Z"
+     id="path181"
+     inkscape:label="path181" />
+  <path
+     fill="url(#a)"
+     d="M7.77 36.35C6.4 35.11 6 32.51 6.57 30.62c.99 1.2 2.35 1.57 3.75 1.78 2.18.33 4.31.2 6.33-.78.23-.12.44-.27.7-.42.18.55.23 1.1.17 1.67a4.56 4.56 0 0 1-1.94 3.23c-.43.32-.9.61-1.34.91-1.38.94-1.76 2.03-1.24 3.62l.05.17a3.63 3.63 0 0 1-1.6-1.38 3.87 3.87 0 0 1-.63-2.1c0-.37 0-.74-.05-1.1-.13-.9-.55-1.3-1.33-1.32a1.56 1.56 0 0 0-1.63 1.26c0 .06-.03.12-.05.2Z"
+     id="path183"
+     inkscape:label="path183" />
+  <path
+     fill="#17191e"
+     d="m 0.02,30.31 c 0,0 4.02,-1.95 8.05,-1.95 l 3.04,-9.4 c 0.11,-0.45 0.44,-0.76 0.82,-0.76 0.37,0 0.7,0.31 0.82,0.76 l 3.04,9.4 c 4.77,0 8.05,1.95 8.05,1.95 L 17,11.71 C 16.8,11.15 16.47,10.8 16.02,10.8 H 7.83 c -0.44,0 -0.76,0.35 -0.97,0.9 z"
+     id="path185"
+     inkscape:label="path185"
+     sodipodi:nodetypes="cccsccccsscc" />
+  <defs
+     id="defs192">
+    <linearGradient
+       id="a"
+       x1="6.33"
+       x2="19.43"
+       y1="40.8"
+       y2="34.6"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         stop-color="#D83333"
+         id="stop187" />
+      <stop
+         offset="1"
+         stop-color="#F041FF"
+         id="stop189" />
+    </linearGradient>
+  </defs>
+  <text
+     xml:space="preserve"
+     style="font-style:italic;font-size:20px;line-height:0px;font-family:'Brush Script MT';-inkscape-font-specification:'Brush Script MT Italic';text-align:end;letter-spacing:-1.75px;text-anchor:end;fill:#e03877;fill-opacity:1;stroke-width:5.66929"
+     x="60.640411"
+     y="27.250872"
+     id="text506"><tspan
+       sodipodi:role="line"
+       id="tspan504"
+       x="59.765411"
+       y="27.250872"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:20px;font-family:'Fira Code';-inkscape-font-specification:'Fira Code Bold';text-align:center;text-anchor:middle;fill:#e03877;fill-opacity:1">Edu<tspan
+   style="fill:#000000"
+   id="tspan1728">Learn</tspan></tspan></text>
+</svg>

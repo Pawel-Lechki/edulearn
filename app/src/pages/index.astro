@@ -1,0 +1,50 @@
+---
+import Carousel from '../components/Carousel';
+import CoursesGrid from '../components/CoursesGrid';
+import CoursesProducts from '../components/Related-Courses.astro';
+import Layout from '../layouts/Layout.astro';
+import type { Course } from '../types/types';
+
+
+const courses = [
+	{ id: 1, title: "Kurs React", price: 199, description: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc,", imageUrl: null, topics: ["New", "React"] },
+	{ id: 2, title: "Kurs Vue", price: 199, description: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc,", imageUrl: null, topics: ["New", "Vue"]},
+	{ id: 3, title: "Kurs Angular", price: 199, description: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc,", imageUrl: null, topics: ["New", "Angular"]},
+	{ id: 4, title: "Kurs Node.js", price: 199, description: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc,", imageUrl: null, topics: ["New", "Node.js"]},
+	{ id: 5, title: "Kurs Python", price: 199, description: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc,", imageUrl: null, topics: ["New", "Python"]},
+	{ id: 6, title: "Kurs JavaScript", price: 199, description: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc,", imageUrl: null, topics: ["New", "JavaScript"]},
+	{ id: 7, title: "Kurs PHP", price: 99, description: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc,", imageUrl: null, topics: ["New", "PHP"]},
+	{ id: 8, title: "Kurs Java", price: 199, description: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc, vitae aliquam nisl nunc vitae nisl. Nulla euismod, nisl eget ultricies ultrices, nunc nisl aliquet nunc,", imageUrl: null, topics: ["New", "Java"]},
+]
+
+const images = [
+	'https://placehold.co/1200x1000',
+	'https://placehold.co/1200x1000',
+	'https://placehold.co/1200x1000',
+	'https://placehold.co/1200x1000',
+];
+
+const coursesResponse = await fetch('http://localhost:8080/api/courses');
+const data = await coursesResponse.json();
+
+const futuredCourses = await fetch('http://localhost:8080/api/topics/Featured');
+const featuredData = await futuredCourses.json();
+---
+
+<Layout title="Strona główna" description="Platforma kursów">
+	<div class="py-10 lg:container mx-auto w-full md:px-0 px-3">
+		<Carousel images={images} client:only />
+	<!-- <h2 class="text-3xl font-bold mb-4">Dostępne kursy</h2>
+	<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+		{courses.map((course) => (
+			<a href={`/course/${course.id}`} class="block p-4 bg-white shadow rounded">
+				<h3 class="text-xl font-semibold">{course.title}</h3>
+				<p class="text-gray-700">Cena: {course.price} zł</p>
+			</a>
+		))}
+	</div> -->
+	<CoursesGrid courses={data as Course[]} />
+	<CoursesProducts courses={featuredData as Course[]} />
+	</div>
+</Layout>
+</Layout>

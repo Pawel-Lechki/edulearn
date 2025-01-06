@@ -1,0 +1,39 @@
+# Dockerfile
+FROM php:8.2-fpm-alpine
+
+# Instalacja podstawowych zależności
+RUN apk add --no-cache \
+    nginx \
+    curl \
+    zip \
+    unzip
+
+# Instalacja rozszerzeń PHP
+RUN docker-php-ext-install pdo pdo_mysql
+
+# Instalacja Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Konfiguracja Nginx
+COPY nginx.conf /etc/nginx/http.d/default.conf
+
+# Utworzenie katalogu aplikacji
+WORKDIR /var/www/html
+
+# Kopiowanie plików aplikacji
+COPY . .
+
+# Instalacja zależności przez Composer
+RUN composer install --no-interaction --no-dev --optimize-autoloader
+
+# Uprawnienia dla plików
+RUN chown -R www-data:www-data /var/www/html
+
+# Eksponowanie portu
+EXPOSE 80
+
+# Skrypt startowy
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["docker-entrypoint.sh"]

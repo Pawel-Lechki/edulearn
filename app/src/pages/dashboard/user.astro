@@ -1,0 +1,16 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export const prerender = false
+---
+
+<Layout title="Panel administratora" description="Panel administratora">
+  <div class="py-10 lg:container mx-auto w-full md:px-0 px-3">
+    <div class="text-text rounded-lg bg-background1 p-5 shadow-lg flex flex-col gap-5">
+      <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold">Panel uzytkownika</h1>
+        <button class="bg-primary text-white px-4 py-2 rounded-lg">Wyloguj</button>
+      </div>
+    </div>
+  </div>
+</Layout>

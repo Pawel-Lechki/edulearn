@@ -1,0 +1,40 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export function getStaticPaths() {
+  return [
+    { params: { id: "1" } },
+    { params: { id: "2" } },
+    { params: { id: "3" } },
+    { params: { id: "4" } },
+    { params: { id: "5" } },
+    { params: { id: "6" } },
+    { params: { id: "7" } },
+  ];
+}
+
+const courses = {
+  1: { title: "Kurs React", description: "Nauka Reacta od podstaw", price: 199 },
+  2: { title: "Kurs Vue", description: "Nauka Vue od podstaw", price: 199 },
+  3: { title: "Kurs Angular", description: "Nauka Angulara od podstaw", price: 199 },
+  4: { title: "Kurs Node.js", description: "Nauka Node.js od podstaw", price: 199 },
+  5: { title: "Kurs Python", description: "Nauka Pythona od podstaw", price: 199 },
+  6: { title: "Kurs JavaScript", description: "Nauka JavaScript od podstaw", price: 199 },
+  7: { title: "Kurs PHP", description: "Nauka PHP od podstaw", price: 99 },
+};
+
+const {id} = Astro.params;
+const course = id ? courses[id] : null;
+---
+<Layout title={course ? course.title : "Kurs nie istnieje"}>
+  {course ? (
+    <div>
+      <h2 class="text-3xl font-bold mb-4">{course.title}</h2>
+      <p class="mb-4">{course.description}</p>
+      <p class="font-semibold text-lg">Cena: {course.price}</p>
+      <button class="bg-blue-500 text-white px-4 py-2 rounded">Kup kurs</button>
+    </div>
+  ) : (
+    <p>Kurs o podanym ID nie istnieje.</p>
+  )}
+</Layout>

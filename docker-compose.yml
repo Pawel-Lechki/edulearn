@@ -1,0 +1,40 @@
+services:
+  api:
+    build: ./api
+    container_name: api
+    ports:
+      - "8080:80"
+    volumes:
+      - ./api:/var/www/html
+      - ./api//public:/var/www/html/public
+    working_dir: /var/www/html/public
+    depends_on:
+      - db
+
+  db:
+    build: ./db
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: edulearn
+      MYSQL_DATABASE: edulearn
+    ports:
+      - "3316:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+
+  app:
+    build: ./app
+    container_name: astro
+    ports:
+      - "3000:4321"
+    volumes:
+      - ./app:/usr/src/app
+    working_dir: /usr/src/app
+    command: npm run dev
+    environment:
+      NODE_ENV: development
+    depends_on:
+      - api
+
+volumes:
+  db-data:

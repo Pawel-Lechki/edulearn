@@ -1,0 +1,9 @@
+---
+import LocalCart from "../components/LocalCart";
+import Layout from "../layouts/Layout.astro";
+
+---
+<Layout title="Koszyk" description="Koszyk">
+  <div class="lg:container mx-auto w-full lg:px-0 px-5">
+    <LocalCart client:visible />
+  </div>

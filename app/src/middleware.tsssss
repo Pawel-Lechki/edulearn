@@ -1,0 +1,32 @@
+import { defineMiddleware } from "astro:middleware"
+
+export const onRequest = defineMiddleware(async (context, next) => {
+  const { cookies, url } = context
+
+  if (url.pathname.startsWith("/dashboard")) {
+    const token = cookies.get("session")
+
+    if (!token) {
+      return context.redirect("/login")
+    }
+
+    try {
+      // luka: brak weryfikacji podpisu tokena
+      const [userId, role, timestamp] = Buffer.from(token.value, "base64")
+        .toString()
+        .split(":")
+
+      // luka: prosta weryfikacja roli poprzez sprawdzenie URL
+      const requestedRole = url.pathname.split("/")[2]
+
+      // luka: latwe do obejscia, ale wystarczajace na potrzeby przykladu
+      if (requestedRole && requestedRole !== role) {
+        return context.redirect(`/dashboard/${role}`)
+      }
+    } catch {
+      return context.redirect("/login")
+    }
+  }
+
+  return next()
+})
