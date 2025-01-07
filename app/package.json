@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --host 0.0.0.0",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
@@ -23,6 +23,7 @@
     "@types/node": "^22.10.5"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.6.1"
+    "@rollup/rollup-linux-x64-gnu": "^4.6.1",
+    "@rollup/rollup-linux-x64-musl": "4.9.5"
   }
 }
