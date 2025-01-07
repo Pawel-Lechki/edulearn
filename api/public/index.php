@@ -17,14 +17,15 @@ $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
 $app->addErrorMiddleware(true, true, true);
 
-// $app->add(function (Request $request, Response $response, callable $next) {
-//     $response = $next($request, $response);
-//     return $response
-//         ->withHeader('Access-Control-Allow-Origin', 'http://localhost:4321/') // Zmień na adres frontendu
-//         ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-//         ->withHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-//         ->withHeader('Access-Control-Allow-Credentials', 'true');
-// });
+
+$app->add(function ($request, $handler) {
+  $response = $handler->handle($request);
+  return $response
+          ->withHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
+          ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+          ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+          ->withHeader('Access-Control-Allow-Credentials', 'true');
+});
 
 // Dodanie routingu API
 $app->group('/api', require __DIR__ . '/../src/Routes/api.php');
