@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import toast from "react-hot-toast"
-import type { Topic } from "../types/types"
+import type { Topic } from "../../types/types"
+import { getTopics } from "../../../use-cases/queries/topics"
 
 interface TopicSelectProps {
   onChange: (selectedTopics: number[]) => void
@@ -13,8 +14,7 @@ const TopicSelect = ({ onChange }: TopicSelectProps) => {
   useEffect(() => {
     const fetchTopics = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/topics")
-        const data = await response.json()
+        const data = await getTopics()
         setTopics(data)
       } catch (error) {
         toast.error("Nie udało się załadować tematów")

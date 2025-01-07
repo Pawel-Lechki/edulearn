@@ -1,5 +1,5 @@
 import toast from "react-hot-toast"
-import type { Course } from "../types/types"
+import type { Course } from "../../types/types"
 
 interface CourseTableProps {
   courses: Course[]

@@ -1,6 +1,7 @@
 import { useState } from "react"
-import TopicSelect from "./TopicSelect"
+
 import toast, { Toaster } from "react-hot-toast"
+import TopicSelect from "../Forms/TopicSelect"
 
 const AddCourseForm = () => {
   const [formData, setFormData] = useState<{

@@ -1,10 +1,10 @@
 import React, { useEffect } from "react"
 import AstroLogo from "../assets/astro.svg"
-import { BasketButton } from "./BasketButton"
-import LoginButton from "./LoginButton"
-import RegisterButton from "./RegisterButton"
-import SearchBar from "./SearchBar"
-import DashboardButton from "./DashboardButton"
+import { BasketButton } from "./Buttons/BasketButton"
+import DashboardButton from "./Buttons/DashboardButton"
+import LoginButton from "./Buttons/LoginButton"
+import RegisterButton from "./Buttons/RegisterButton"
+import SearchBar from "./Forms/SearchBar"
 
 const Header = () => {
   const role = localStorage.getItem("role")

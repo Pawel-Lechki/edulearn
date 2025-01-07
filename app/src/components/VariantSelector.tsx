@@ -1,5 +1,5 @@
 import { useState } from "react"
-import QuantityInput from "./QuantityInput"
+import QuantityInput from "./Forms/QuantityInput"
 import type { CourseVariant } from "../types/types"
 
 interface VariantSelectorProps {

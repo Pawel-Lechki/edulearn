@@ -1,5 +1,7 @@
 import React, { useState } from "react"
-import mglassImage from "../assets/mglass.svg"
+import mglassImage from "../../assets/mglass.svg"
+import { getCoursesByTitle } from "../../../use-cases/queries/courses"
+import toast from "react-hot-toast"
 
 const SearchBar = () => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false)
@@ -7,15 +9,11 @@ const SearchBar = () => {
 
   const handleSearch = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      // Perform search logic here
       try {
-        const resoponse = await fetch(
-          `http://localhost:8080/api/courses/search?title=${searchTerm}`
-        )
-        const data = await resoponse.json()
-        console.log(data)
+        const data = await getCoursesByTitle(searchTerm)
+        window.location.href = `/search?query=${encodeURIComponent(searchTerm)}`
       } catch (error) {
-        console.error("Something went wrong")
+        toast.error("Something went wrong")
       }
     }
   }

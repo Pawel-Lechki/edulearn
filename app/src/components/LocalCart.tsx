@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import type { CourseVariant } from "../types/types"
-import QuantityInput from "./QuantityInput"
+import QuantityInput from "./Forms/QuantityInput"
 
 const LocalCart = () => {
   const [cartItems, setCartItems] = useState<CourseVariant[]>([])

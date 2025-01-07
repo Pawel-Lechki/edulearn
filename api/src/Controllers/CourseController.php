@@ -61,17 +61,21 @@ class CourseController
   {
     $params = $request->getQueryParams();
     $title = $params['title'] ?? '';
-    $sql = "SELECT * FROM courses WHERE title LIKE '%$title%'";
-    $stmt = $this->db->query($sql);
-    $course = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $sql = "SELECT c.*, GROUP_CONCAT(t.name) as topics 
+                FROM courses c
+                LEFT JOIN course_topics ct ON c.id = ct.course_id
+                LEFT JOIN topics t ON ct.topic_id = t.id
+                WHERE c.title LIKE '%$title%'
+                GROUP BY c.id";
 
-    if (!$course) {
-      $response->getBody()->write(json_encode(['message' => 'Course not found']));
-      return $response
-      ->withHeader('Content-Type', 'application/json')
-      ->withStatus(404);
+    $stmt = $this->db->query($sql);
+    $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($courses as &$course) {
+        $course['topics'] = $course['topics'] ? explode(',', $course['topics']) : [];
     }
-    $response->getBody()->write(json_encode($course));
+
+    $response->getBody()->write(json_encode($courses));
     return $response
     ->withHeader('Content-Type', 'application/json')
     ->withStatus(200);

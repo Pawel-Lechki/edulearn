@@ -1,6 +1,7 @@
 import { useState } from "react"
 import toast, { Toaster } from "react-hot-toast"
-import UsersTable from "./UsersTable"
+import UsersTable from "../Tables/UsersTable"
+import { getUsersByName } from "../../../use-cases/queries/user"
 
 const SearchUsers = () => {
   const [searchTerm, setSearchTerm] = useState<string>("")
@@ -8,10 +9,7 @@ const SearchUsers = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/users/s/search?name=${searchTerm}`
-      )
-      const data = await response.json()
+      const data = await getUsersByName(searchTerm)
       setUsers(data)
     } catch (error) {
       toast.error("Błąd podczas wyszukiwania użytkowników")

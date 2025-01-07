@@ -1,5 +1,6 @@
 import { useState } from "react"
 import toast, { Toaster } from "react-hot-toast"
+import { registerUser } from "../../../use-cases/mutations/registerUser"
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -22,15 +23,13 @@ const RegisterForm = () => {
     e.preventDefault()
 
     try {
-      const response = await fetch("http://localhost:8080/api/users", {
-        method: "POST",
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
-        body: JSON.stringify(formData),
-      })
+      const data = await registerUser(
+        formData.username,
+        formData.email,
+        formData.password
+      )
 
-      if (response.status === 201) {
+      if (data) {
         toast.success("Rejestracja przebiegla pommyslnie!")
         setTimeout(() => {
           window.location.href = "/"

@@ -1,4 +1,5 @@
 ---
+import { getAllCourses, getCoursesByTopic } from '../../use-cases/queries/courses';
 import Carousel from '../components/Carousel';
 import CoursesGrid from '../components/CoursesGrid';
 import CoursesProducts from '../components/Related-Courses.astro';
@@ -24,11 +25,9 @@ const images = [
 	'https://placehold.co/1200x1000',
 ];
 
-const coursesResponse = await fetch('http://api/api/courses');
-const data = await coursesResponse.json();
+const allCourses = await getCoursesByTopic('New');
+const futuredCourses = await getCoursesByTopic('Featured');
 
-const futuredCourses = await fetch('http://api/api/topics/Featured');
-const featuredData = await futuredCourses.json();
 ---
 
 <Layout title="Strona główna" description="Platforma kursów">
@@ -43,8 +42,8 @@ const featuredData = await futuredCourses.json();
 			</a>
 		))}
 	</div> -->
-	<CoursesGrid courses={data as Course[]} />
-	<CoursesProducts courses={featuredData as Course[]} />
+	<CoursesGrid courses={allCourses as Course[]} />
+	<CoursesProducts courses={futuredCourses as Course[]} />
 	</div>
 </Layout>
 </Layout>

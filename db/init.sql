@@ -107,7 +107,8 @@ INSERT INTO topics (name) VALUES
 ('MariaDB'),
 ('Cassandra'),
 ('Redis'),
-('Firebase');
+('Firebase')
+('Sale');
 
 INSERT INTO users (username, email, password, role) VALUES
 ('admin', 'admin@example.com', 'admin123', 'admin'),

@@ -28,18 +28,27 @@ class TopicsController
     public function getCoursesByTopics(Request $request, Response $response, array $args): Response
     {
         $topicName = $args['name'];
-        $sql = "SELECT c.* FROM courses c
-                JOIN course_topics ct ON c.id = ct.course_id
-                JOIN topics t ON ct.topic_id = t.id
-                WHERE t.name = :topicName";
+        $sql = "SELECT c.*, GROUP_CONCAT(t.name) as topics 
+                FROM courses c
+                LEFT JOIN course_topics ct ON c.id = ct.course_id
+                LEFT JOIN topics t ON ct.topic_id = t.id
+                WHERE t.name = :topicName
+                GROUP BY c.id
+                LIMIT 8";
+        
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':topicName', $topicName);
         $stmt->execute();
         $courses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($courses as &$course) {
+            $course['topics'] = $course['topics'] ? explode(',', $course['topics']) : [];
+        }
+
         $response->getBody()->write(json_encode($courses));
         return $response
-        ->withHeader('Content-Type', 'application/json')
-        ->withStatus(200);
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus(200);
     }
 }
 

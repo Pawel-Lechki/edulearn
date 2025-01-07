@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
-import type { Course } from "../types/types"
+import type { Course } from "../../types/types"
 import toast from "react-hot-toast"
-import CourseTable from "./CourseTable"
+import CourseTable from "../Tables/CourseTable"
 
 const TeacherCourses = () => {
   const [courses, setCourses] = useState<Course[]>([])

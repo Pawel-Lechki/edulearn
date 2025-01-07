@@ -1,5 +1,6 @@
 import { useState } from "react"
 import toast, { Toaster } from "react-hot-toast"
+import { loginUser } from "../../../use-cases/queries/user"
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -19,19 +20,9 @@ const LoginForm = () => {
     e.preventDefault()
 
     try {
-      const response = await fetch("http://localhost:8080/api/users/auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(formData),
-      })
+      const data = await loginUser(formData.email, formData.password)
 
-      const data = await response.json()
-
-      if (response.ok) {
+      if (data) {
         const token = btoa(`${data.id}:${data.role}:${Date.now()}`)
         localStorage.setItem("session", token)
         localStorage.setItem("userId", data.id)
