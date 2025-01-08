@@ -5,13 +5,14 @@ use App\Controllers\UserController;
 use App\Controllers\CourseController;
 use App\Controllers\TopicsController;
 use Slim\Routing\RouteCollectorProxy;
+use App\Middleware\UploadMiddleware;
 
 return function (RouteCollectorProxy $group) {
     // Users routes
     $group->group('/users', function (RouteCollectorProxy $group) {
         $group->get('', [UserController::class, 'getUsers']);
         $group->get('/{id}', [UserController::class, 'getUserById']);
-        $group->post('', [UserController::class, 'createUser']);
+        $group->post('', [UserController::class, 'createUser'])->add(new UploadMiddleware());;
         $group->put('/{id}', [UserController::class, 'updateUser']);
         $group->delete('/{id}', [UserController::class, 'deleteUser']);
         $group->post('/auth', [UserController::class, 'authUser']);
@@ -40,3 +41,5 @@ return function (RouteCollectorProxy $group) {
         $group->get('/{id}', [CourseImagesController::class, 'getCourseImages']);
     });
 };
+
+

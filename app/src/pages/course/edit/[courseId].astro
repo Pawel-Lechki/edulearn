@@ -1,8 +1,10 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import Course from "../../components/Course";
-import { getAllCourses, getCourseById } from "../../../use-cases/queries/courses";
-import type { Course as CourseType} from "../../types/types";
+
+
+import CourseEdit from "../../../components/CourseEdit";
+import Layout from "../../../layouts/Layout.astro";
+import { getAllCourses, getCourseById } from "../../../../use-cases/queries/courses";
+import type { Course as CourseType} from "../../../types/types";
 
 export const prerender = true;
 
@@ -16,12 +18,12 @@ const { courseId } = Astro.params;
 const courseData = await getCourseById(courseId);
 ---
 
-<Layout title={courseData.title} description={courseData.title} >
+<Layout title={`Edytuj kurs ${courseData.title}`} description={`Edytuj kurs ${courseData.title}`} >
   <div class="lg:container mx-auto w-full lg:px-0 px-5">
     {
       courseData ? 
       (
-        <Course course={courseData} client:load/>
+        <CourseEdit course={courseData} client:load/>
       ) : 
       (
         <p>Kurs nie znaleziony</p>

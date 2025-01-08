@@ -1,4 +1,5 @@
 ---
+import LogoutButton from "../../components/Buttons/LogoutButton";
 import TeacherDashboard from "../../components/TeacherDashboard/TeacherDashboard";
 import Layout from "../../layouts/Layout.astro";
 
@@ -10,7 +11,7 @@ import Layout from "../../layouts/Layout.astro";
     <div class="text-text rounded-lg bg-background1 p-5 shadow-lg flex flex-col gap-5">
       <div class="flex justify-between items-center">
         <h1 class="text-3xl font-bold">Panel nauczyciela</h1>
-        <button class="bg-primary text-white px-4 py-2 rounded-lg">Wyloguj</button>
+        <LogoutButton client:visible />
       </div>
       <TeacherDashboard client:only="react" />
     </div>

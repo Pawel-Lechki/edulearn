@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import SearchUsers from "../../components/Forms/SearchUsers";
 import SearchCourse from "../../components/Forms/SearchCourse";
+import LogoutButton from "../../components/Buttons/LogoutButton";
 
 
 ---
@@ -11,7 +12,7 @@ import SearchCourse from "../../components/Forms/SearchCourse";
     <div class="text-text rounded-lg bg-background1 p-5 shadow-lg flex flex-col gap-5">
       <div class="flex justify-between items-center">
         <h1 class="text-3xl font-bold">Panel administratora</h1>
-        <button class="bg-primary text-white px-4 py-2 rounded-lg">Wyloguj</button>
+        <LogoutButton client:visible />
       </div>
 
       <h3 class="text-xl font-semibold">Wyszukaj uzytkownika</h3>

@@ -31,3 +31,9 @@ export type Topic = {
   id: number
   name: string
 }
+
+export type CourseImage = {
+  id: number
+  course_id: number
+  image: string
+}

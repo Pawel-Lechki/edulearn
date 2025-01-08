@@ -54,9 +54,14 @@ const CourseTable = ({ courses, setCourses }: CourseTableProps) => {
               <td className="px-6 py-4">{course.title}</td>
               <td className="px-6 py-4">{course.price}</td>
               <td className="px-6 py-4">{course.user_id}</td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-4 flex gap-2">
+                <a href={`/course/edit/${course.id}`}>
+                  <button className="px-4 py-2 bg-buttonSecondary rounded-md">
+                    Edytuj
+                  </button>
+                </a>
                 <button
-                  className="text-red-500"
+                  className="px-4 py-2 bg-buttonPrimary text-white rounded-md"
                   onClick={() => handleDelete(course.id)}
                 >
                   Usuń

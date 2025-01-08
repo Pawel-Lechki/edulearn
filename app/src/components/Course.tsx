@@ -91,7 +91,7 @@ const Course = ({ course }: CourseProps) => {
         </button>
       </div>
       {/* TODO: Add CourseBody */}
-      <CourseBody />
+      <CourseBody courseId={course.id} description={course.description} />
       <p className="text-text mb-4 font-semibold">Powiązane kursy:</p>
       {/* <RelatedProducts products={course.relatedProducts} /> */}
     </>

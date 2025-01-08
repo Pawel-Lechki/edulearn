@@ -2,6 +2,7 @@ import { useState } from "react"
 
 import toast, { Toaster } from "react-hot-toast"
 import TopicSelect from "../Forms/TopicSelect"
+import { createCourse } from "../../../use-cases/mutations/createCorse"
 
 const AddCourseForm = () => {
   const [formData, setFormData] = useState<{
@@ -62,17 +63,9 @@ const AddCourseForm = () => {
     })
 
     try {
-      const response = await fetch("http://localhost:8080/api/courses", {
-        method: "POST",
-        body: data,
-      })
-
-      if (response.ok) {
-        toast.success("Kurs został dodany!")
-        // Optional: Clear form or redirect
-      } else {
-        toast.error("Nie udało się dodać kursu")
-      }
+      await createCourse(data)
+      toast.success("Kurs został dodany!")
+      // Optional: Clear form or redirect
     } catch (error) {
       toast.error("Wystąpił błąd podczas dodawania kursu")
     }
