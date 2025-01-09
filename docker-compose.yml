@@ -3,7 +3,7 @@ services:
     build: ./api
     container_name: api
     ports:
-      - "8080:80"
+      - '8080:80'
     volumes:
       - ./api:/var/www/html
       - ./api//public:/var/www/html/public
@@ -18,7 +18,7 @@ services:
       MYSQL_ROOT_PASSWORD: edulearn
       MYSQL_DATABASE: edulearn
     ports:
-      - "3316:3306"
+      - '3316:3306'
     volumes:
       - db-data:/var/lib/mysql
 
@@ -26,7 +26,7 @@ services:
     build: ./app
     container_name: astro
     ports:
-      - "3000:4321"
+      - '3000:4321'
     volumes:
       - ./app:/app
     working_dir: /app

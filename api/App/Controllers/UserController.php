@@ -4,22 +4,26 @@ namespace App\Controllers;
 
 use Flight;
 
-class UserController {
+class UserController
+{
 
   private $db;
 
-  public function __construct() {
+  public function __construct()
+  {
     $this->db = Flight::db();
   }
 
-  public function getUsers() {
+  public function getUsers()
+  {
     $users = $this->db->fetchAll("SELECT * FROM users");
     return Flight::json($users);
   }
 
-  public function getUserById($id) {
-    $user = $this->db->fetch("SELECT * FROM users WHERE id = $id");
-    
+  public function getUserById($id)
+  {
+    $user = $this->db->fetchRow("SELECT * FROM users WHERE id = $id");
+
     if (!$user) {
       return Flight::notFound();
     }
@@ -27,11 +31,12 @@ class UserController {
     return Flight::json($user);
   }
 
-  public function loginUser() {
+  public function loginUser()
+  {
     $data = Flight::request()->data;
     $email = $data["email"];
     $password = $data['password'];
-    $user = $this->db->fetch("SELECT * FROM users WHERE email = '$email' AND password = '$password'");
+    $user = $this->db->fetchRow("SELECT * FROM users WHERE email = '$email' AND password = '$password'");
 
     if (!$user) {
       return Flight::notFound();
@@ -48,7 +53,8 @@ class UserController {
     return Flight::json($users);
   }
 
-  public function registerUser() {
+  public function registerUser()
+  {
     $data = Flight::request()->data;
     $name = $data["name"];
     $email = $data["email"];
@@ -59,13 +65,14 @@ class UserController {
     return Flight::json(['message' => 'User registered successfully']);
   }
 
-  public function updateUser($id) {
+  public function updateUser($id)
+  {
     $data = Flight::request()->data;
     $name = $data["name"];
     $email = $data["email"];
     $password = $data['password'];
 
-    $user = $this->db->fetch("SELECT * FROM users WHERE id = $id");
+    $user = $this->db->fetchRow("SELECT * FROM users WHERE id = $id");
 
     if (!$user) {
       return Flight::notFound();
@@ -76,8 +83,9 @@ class UserController {
     return Flight::json(['message' => 'User updated successfully']);
   }
 
-  public function deleteUser($id) {
-    $user = $this->db->fetch("SELECT * FROM users WHERE id = $id");
+  public function deleteUser($id)
+  {
+    $user = $this->db->fetchRow("SELECT * FROM users WHERE id = $id");
 
     if (!$user) {
       return Flight::notFound();

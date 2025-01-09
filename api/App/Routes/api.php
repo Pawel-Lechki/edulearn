@@ -26,32 +26,43 @@ Flight::route('OPTIONS *', function () {
     Flight::json(['message' => 'Preflight request'], 200);
     exit();
 });
+Flight::group('/api', function () {
 
-// Topics
-Flight::group('/topics', function () {
-    Flight::route('GET /', [new TopicsController(), 'getTopics']);
-    Flight::route('GET /@name', [new TopicsController(), 'getCoursesByTopic']);
-});
 
-// Course Users
-Flight::group('/course-users', function () {
-    Flight::route('GET /@courseId', [new CourseUsersController(), 'getUsersByCourse']);
-    Flight::route('POST /@courseId/@userId', [new CourseUsersController(), 'addUserToCourse']);
-});
+    // Topics
+    Flight::group('/topics', function () {
+        Flight::route('GET /', [new TopicsController(), 'getTopics']);
+        Flight::route('GET /@name', [new TopicsController(), 'getCoursesByTopic']);
+    });
 
-// Course Images
-Flight::group('/course-images', function () {
-    Flight::route('POST /@courseId', [new CourseImagesController(), 'addCourseImages']);
-    Flight::route('GET /@courseId', [new CourseImagesController(), 'getCourseImages']);
-});
+    // Course Users
+    Flight::group('/course-users', function () {
+        Flight::route('GET /@courseId', [new CourseUsersController(), 'getUsersByCourse']);
+        Flight::route('POST /@courseId/@userId', [new CourseUsersController(), 'addUserToCourse']);
+    });
 
-// User
-Flight::group('/users', function () {
-    Flight::route('GET /', [new UserController(), 'getUsers']);
-    Flight::route('GET /@id', [new UserController(), 'getUserById']);
-    Flight::route('GET /name', [new UserController(), 'getUserByName']);
-    Flight::route('POST /auth', [new UserController(), 'loginUser']);
-    Flight::route('POST /', [new UserController(), 'registerUser']);
-    Flight::route('PUT /@id', [new UserController(), 'updateUser']);
-    Flight::route('DELETE /@id', [new UserController(), 'deleteUser']);
+    // Course Images
+    Flight::group('/course-images', function () {
+        Flight::route('POST /@courseId', [new CourseImagesController(), 'addCourseImages']);
+        Flight::route('GET /@courseId', [new CourseImagesController(), 'getCourseImages']);
+    });
+
+    // User
+    Flight::group('/users', function () {
+        Flight::route('GET /', [new UserController(), 'getUsers']);
+        Flight::route('GET /@id', [new UserController(), 'getUserById']);
+        Flight::route('GET /name', [new UserController(), 'getUserByName']);
+        Flight::route('POST /auth', [new UserController(), 'loginUser']);
+        Flight::route('POST /', [new UserController(), 'registerUser']);
+        Flight::route('PUT /@id', [new UserController(), 'updateUser']);
+        Flight::route('DELETE /@id', [new UserController(), 'deleteUser']);
+    });
+
+    Flight::group('/courses', function () {
+        Flight::route('GET /', [new CourseController(), 'getCourses']);
+        Flight::route('GET /@id', [new CourseController(), 'getCourseById']);
+        Flight::route('POST /', [new CourseController(), 'addCourse']);
+        Flight::route('PUT /@id', [new CourseController(), 'updateCourse']);
+        Flight::route('DELETE /@id', [new CourseController(), 'deleteCourse']);
+    });
 });

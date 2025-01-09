@@ -2,12 +2,13 @@ CREATE DATABASE IF NOT EXISTS edulearn;
 
 USE edulearn;
 
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS courses;
-DROP TABLE IF EXISTS topics;
 DROP TABLE IF EXISTS course_topics;
 DROP TABLE IF EXISTS course_users;
 DROP TABLE IF EXISTS course_images;
+DROP TABLE IF EXISTS courses;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS topics;
+
 
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -56,7 +57,7 @@ CREATE TABLE IF NOT EXISTS course_users (
 CREATE TABLE IF NOT EXISTS course_images (
     id INT AUTO_INCREMENT PRIMARY KEY,
     course_id INT,
-    image VARCHAR(255),
+    imageUrl VARCHAR(255),
     FOREIGN KEY (course_id) REFERENCES courses(id)
     ON DELETE CASCADE
 );
@@ -107,7 +108,7 @@ INSERT INTO topics (name) VALUES
 ('MariaDB'),
 ('Cassandra'),
 ('Redis'),
-('Firebase')
+('Firebase'),
 ('Sale');
 
 INSERT INTO users (username, email, password, role) VALUES
