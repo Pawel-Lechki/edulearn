@@ -18,7 +18,7 @@ class CorsMiddleware implements MiddlewareInterface
         }
 
         return $response
-            ->withHeader('Access-Control-Allow-Origin', 'http://localhost:4321')
+            ->withHeader('Access-Control-Allow-Origin', 'http://localhost:3000')
             ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization, Content-Disposition, multipart/form-data')
             ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
             ->withHeader('Access-Control-Allow-Credentials', 'true')

@@ -36,7 +36,7 @@ services:
     command: sh -c "npm install && HOST=0.0.0.0 npm run dev"
     environment:
       NODE_ENV: development
-      VITE_API_URL: http://api/api # Dodaj zmienną środowiskową
+      VITE_API_URL: http://localhost:3000/api # Dodaj zmienną środowiskową
     networks:
       - app-network
     depends_on:
