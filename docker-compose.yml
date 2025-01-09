@@ -6,8 +6,9 @@ services:
       - "8080:80"
     volumes:
       - ./api:/var/www/html
-      - ./api//public:/var/www/html/public
-    working_dir: /var/www/html/public
+    working_dir: /var/www/html
+    networks:
+      - app-network
     depends_on:
       - db
 
@@ -21,6 +22,8 @@ services:
       - "3316:3306"
     volumes:
       - db-data:/var/lib/mysql
+    networks:
+      - app-network
 
   app:
     build: ./app
@@ -33,8 +36,15 @@ services:
     command: sh -c "npm install && HOST=0.0.0.0 npm run dev"
     environment:
       NODE_ENV: development
+      VITE_API_URL: http://api/api # Dodaj zmienną środowiskową
+    networks:
+      - app-network
     depends_on:
       - api
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   db-data:

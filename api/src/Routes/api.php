@@ -15,7 +15,7 @@ return function (RouteCollectorProxy $group) {
         $group->post('', [UserController::class, 'createUser'])->add(new UploadMiddleware());;
         $group->put('/{id}', [UserController::class, 'updateUser']);
         $group->delete('/{id}', [UserController::class, 'deleteUser']);
-        $group->post('/auth', [UserController::class, 'authUser']);
+        $group->post('/login', [UserController::class, 'authUser']);
         $group->get('/s/search', [UserController::class, 'getUsersByUsername']);
     });
 

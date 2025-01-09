@@ -1,0 +1,16 @@
+RewriteEngine On
+RewriteBase /
+
+# Jeśli żądanie zaczyna się od /api
+RewriteCond %{REQUEST_URI} ^/api/
+# Przekieruj do odpowiedniego pliku w public
+RewriteRule ^api/(.*)$ public/index.php [L]
+
+# Handle OPTIONS method
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=200,L]
+
+# Ustaw nagłówki CORS
+Header always set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Methods "POST, GET, OPTIONS, DELETE, PUT"
+Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"

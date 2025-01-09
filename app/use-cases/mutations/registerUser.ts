@@ -5,7 +5,7 @@ export const registerUser = async (
   email: string,
   password: string
 ) => {
-  const response = await fetch(`${apiUrl}users`, {
+  const response = await fetch(`${apiUrl}/api/users`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

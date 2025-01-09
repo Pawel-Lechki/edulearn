@@ -3,7 +3,7 @@ import { apiUrl } from "../globals"
 export const addCourseImage = async (courseId: number, image: File) => {
   const formData = new FormData()
   formData.append("image", image)
-  const response = await fetch(`${apiUrl}courses/${courseId}/images`, {
+  const response = await fetch(`${apiUrl}/api/courses/${courseId}/images`, {
     method: "POST",
     body: formData,
   })
