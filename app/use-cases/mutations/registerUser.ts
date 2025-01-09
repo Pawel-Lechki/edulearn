@@ -1,11 +1,11 @@
-import { apiUrl } from "../globals"
+import { apiClientUrl } from "../globals"
 
 export const registerUser = async (
   name: string,
   email: string,
   password: string
 ) => {
-  const response = await fetch(`${apiUrl}/api/users`, {
+  const response = await fetch(`${apiClientUrl}/api/users`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

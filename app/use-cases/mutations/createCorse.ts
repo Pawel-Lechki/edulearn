@@ -1,7 +1,7 @@
-import { apiUrl } from "../globals"
+import { apiClientUrl } from "../globals"
 
 export const createCourse = async (formData: FormData) => {
-  const response = await fetch(`${apiUrl}/api/courses`, {
+  const response = await fetch(`${apiClientUrl}/api/courses`, {
     method: "POST",
     body: formData,
     // headers: {
