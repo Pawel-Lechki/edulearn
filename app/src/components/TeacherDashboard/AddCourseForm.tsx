@@ -48,24 +48,27 @@ const AddCourseForm = () => {
     e.preventDefault()
 
     const data = new FormData()
-    Object.entries(formData).forEach(([key, value]) => {
-      if (value !== null) {
-        if (typeof value === "string" || value instanceof Blob) {
-          data.append(key, value)
-        } else if (typeof value === "number") {
-          data.append(key, value.toString())
-        } else if (Array.isArray(value)) {
-          value.forEach((item, index) => {
-            data.append(`${key}[${index}]`, item.toString())
-          })
-        }
-      }
+    // Add all form fields
+    data.append("title", formData.title)
+    data.append("short_description", formData.short_description)
+    data.append("description", formData.description)
+    data.append("price", formData.price.toString())
+    data.append("user_id", formData.user_id)
+    data.append("related", formData.related)
+
+    // Add image if exists
+    if (formData.image) {
+      data.append("image", formData.image)
+    }
+
+    // Add topics array
+    formData.topics.forEach((topicId, index) => {
+      data.append(`topics[${index}]`, topicId.toString())
     })
 
     try {
       await createCourse(data)
       toast.success("Kurs został dodany!")
-      // Optional: Clear form or redirect
     } catch (error) {
       toast.error("Wystąpił błąd podczas dodawania kursu")
     }

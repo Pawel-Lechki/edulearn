@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
-import type { Course as CoruseType, CourseVariant } from "../types/types"
+import type { Course as CourseType, CourseVariant } from "../types/types"
 import RelatedProducts from "./RelatedCourses"
 import CourseBody from "./CourseBody"
 import courseImg from "../assets/course.svg"
 import VariantSelector from "./VariantSelector"
+import { useCartStore } from "../store/cartStore"
+import { apiClientUrl, apiServerUrl } from "../../use-cases/globals"
 
 interface CourseProps {
-  course: CoruseType
+  course: CourseType
 }
 
 const Course = ({ course }: CourseProps) => {
@@ -19,7 +21,6 @@ const Course = ({ course }: CourseProps) => {
     discount: 0,
     price: course.price,
   })
-  const [cart, setCart] = useState<any>([])
 
   useEffect(() => {
     setCourseVariant((prev) => ({
@@ -28,45 +29,32 @@ const Course = ({ course }: CourseProps) => {
     }))
   }, [currentPrice])
 
-  const addToCard = (course: any) => {
-    setButtonText("Dodawanie...")
-    // setCourseVariant({ ...courseVariant, price: currentPrice })
-    const newCart = [...cart, courseVariant]
-    setCart(newCart)
+  const addToCart = () => {
+    useCartStore.getState().addItem(courseVariant)
     setButtonText("Dodano do koszyka 🎉")
     setTimeout(() => setButtonText("Dodaj do koszyka"), 1000)
-    console.log(cart)
   }
 
   const handlePriceChange = (price: number) => {
     setCurrentPrice(price)
   }
 
-  useEffect(() => {
-    const cart = localStorage.getItem("cart")
-    if (cart) {
-      setCart(JSON.parse(cart))
-    }
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart))
-  }, [cart])
-
   return (
     <>
       <div className="flex lg:flex-row gap-2 w-full items-center flex-col">
         <div className="flex flex-col text-text w-[400px]">
           <h1 className="font-extrabold text-5xl mb-3">{course.title}</h1>
-          <p className="text-xl">{course.description}</p>
+          <div
+            className="text-xl"
+            dangerouslySetInnerHTML={{ __html: course.short_description }}
+          />
         </div>
         <img
-          src={course.image ? course.image : courseImg.src}
+          src={course.image ? `${apiClientUrl}/${course.image}` : courseImg.src}
           alt={course.title}
           className="w-[500px] object-cover rounded-sm mx-auto"
         />
         <div className="lg:mb-0 mb-5">
-          {/* TODO: Add option to add promo code */}
           <VariantSelector
             cousrseVariant={courseVariant}
             setCourseVariant={setCourseVariant}
@@ -79,21 +67,15 @@ const Course = ({ course }: CourseProps) => {
         <div>
           <p className="font-semibold text-sm">Koszt:</p>
           <p className="font-bold text-lg">
-            {/* // TODO: Add price with discount */}
             {currentPrice.toLocaleString("pl-PL")} PLN
           </p>
         </div>
-        <button
-          className="bg-background2 px-4 rounded-xl"
-          onClick={() => addToCard(course)}
-        >
+        <button className="bg-background2 px-4 rounded-xl" onClick={addToCart}>
           {buttonText}
         </button>
       </div>
-      {/* TODO: Add CourseBody */}
       <CourseBody courseId={course.id} description={course.description} />
       <p className="text-text mb-4 font-semibold">Powiązane kursy:</p>
-      {/* <RelatedProducts products={course.relatedProducts} /> */}
     </>
   )
 }

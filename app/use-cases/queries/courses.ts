@@ -1,4 +1,4 @@
-import { apiServerUrl } from "../globals"
+import { apiClientUrl, apiServerUrl } from "../globals"
 
 export const getAllCourses = async () => {
   const response = await fetch(`${apiServerUrl}/api/courses`)
@@ -18,9 +18,17 @@ export const getCourseById = async (id: string) => {
   return data
 }
 
-export const getCoursesByTitle = async (title: string) => {
+export const getCoursesByTitleServer = async (title: string) => {
   const response = await fetch(
     `${apiServerUrl}/api/courses/search?title=${title}`
+  )
+  const data = await response.json()
+  return data
+}
+
+export const getCoursesByTitleClient = async (title: string) => {
+  const response = await fetch(
+    `${apiClientUrl}/api/courses/search?title=${title}`
   )
   const data = await response.json()
   return data

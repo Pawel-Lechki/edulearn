@@ -35,16 +35,54 @@ const {pathname} = Astro.url;
       )
     }
 		
-		<footer class="container mt-40 mx-auto pb-10">
-      <div class="flex mt-10  w-full text-center justify-end">
-        <div class="flex items-center gap-1 mt-10">
-          <img src={logo.src} alt="Crystallize" class="w-5" />
-          Powered by <a href="https://crystallize.com" class="underline">
-            Crystallize</a
-          > + <a href="https://astro.build" class="underline">Astro</a>
+		<footer class="container mx-auto pb-10 text-text">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 py-12">
+      <div>
+        <h3 class="font-bold text-lg mb-4">O nas</h3>
+        <ul class="space-y-2">
+          <li><a href="/about">O platformie</a></li>
+          <li><a href="/contact">Kontakt</a></li>
+          <li><a href="/blog">Blog</a></li>
+        </ul>
+      </div>
+      
+      <div>
+        <h3 class="font-bold text-lg mb-4">Dla kursantów</h3>
+        <ul class="space-y-2">
+          <li><a href="/courses">Katalog kursów</a></li>
+          <li><a href="/certificates">Certyfikaty</a></li>
+          <li><a href="/faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-bold text-lg mb-4">Dla instruktorów</h3>
+        <ul class="space-y-2">
+          <li><a href="/teach">Zostań instruktorem</a></li>
+          <li><a href="/resources">Materiały</a></li>
+          <li><a href="/partner">Program partnerski</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-bold text-lg mb-4">Śledź nas</h3>
+        <div class="flex space-x-4">
+          <a href="#" class="hover:text-primary">Facebook</a>
+          <a href="#" class="hover:text-primary">Twitter</a>
+          <a href="#" class="hover:text-primary">LinkedIn</a>
         </div>
       </div>
-    </footer>
+    </div>
+
+    <div class="border-t border-gray-200 pt-8 mt-8">
+      <p class="text-center text-sm">
+        © 2024 EduLearn. Wszystkie prawa zastrzeżone.
+      </p>
+    </div>
+  </div>
+</footer>
+
 		<style is:global>
 			.bg-fixed {
 				background-attachment: scroll;

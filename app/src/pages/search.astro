@@ -1,7 +1,7 @@
 ---
 
+import { getCoursesByTitleServer } from '../../use-cases/queries/courses';
 import CourseCard from '../components/CourseCard'
-import { getCoursesByTitle } from '../../use-cases/queries/courses';
 import Layout from '../layouts/Layout.astro';
 import type { Course } from '../types/types';
 
@@ -9,7 +9,7 @@ const query = Astro.url.searchParams.get('query');
 let courses: Course[] = [];
 
 if (query) {
-  courses = await getCoursesByTitle(query);
+  courses = await getCoursesByTitleServer(query);
 }
 ---
 

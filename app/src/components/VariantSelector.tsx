@@ -26,6 +26,10 @@ const VariantSelector = ({
   }
 
   const handleDiscountCodeChange = (code: string) => {
+    // XSS
+    const discountMessage = `<p>Kod ${code} został użyty!</p>`
+    document.getElementById("discount-message")!.innerHTML = discountMessage
+
     setDiscountCode(code)
     if (code === "PROMO") {
       const newPrice = besePrice * 0.9 * quantity
@@ -61,6 +65,7 @@ const VariantSelector = ({
             Dodaj
           </button>
         </div>
+        <div id="discount-message" className="text-sm text-red-500 mt-2"></div>
       </div>
     </div>
   )

@@ -25,7 +25,10 @@ const CourseBody = ({ courseId, description }: CourseBodyProps) => {
   return (
     <div className="flex flex-col gap-3 my-10 lg:w-9/12 w-full mx-auto z-10">
       <p className="text-text font-semibold">Opis kursu:</p>
-      <p className="text-text">{description}</p>
+      <div
+        className="text-xl"
+        dangerouslySetInnerHTML={{ __html: description }}
+      />
       {images && images.length > 0 && (
         <div className="mt-8">
           <p className="text-text font-semibold mb-4">Galeria kursu:</p>

@@ -1,5 +1,6 @@
 import { TopicsDisplayer } from "./TopicsDisplayer"
 import courseImg from "../assets/course.svg"
+import { apiClientUrl } from "../../use-cases/globals"
 
 interface CourseCardProps {
   id: number
@@ -34,9 +35,9 @@ const CourseCard = ({
         </div>
         <div className="flex-grow">
           <img
-            src={image ? image : courseImg.src}
+            src={image ? `${apiClientUrl}/${image}` : courseImg.src}
             alt={title}
-            className="w-full h-52 object-fill rounded-lg"
+            className="w-full h-72 rounded-lg object-cover"
           />
         </div>
         <h2 className="text-2xl font-bold text-center m-auto">{title}</h2>

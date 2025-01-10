@@ -4,6 +4,7 @@
 use App\Controllers\UserController;
 use App\Controllers\CourseController;
 use App\Controllers\TopicsController;
+use App\Controllers\CourseImagesController;
 use Slim\Routing\RouteCollectorProxy;
 use App\Middleware\UploadMiddleware;
 
@@ -39,7 +40,9 @@ return function (RouteCollectorProxy $group) {
     // Course Images routes
     $group->group('/course-images', function (RouteCollectorProxy $group) {
         $group->get('/{id}', [CourseImagesController::class, 'getCourseImages']);
+        $group->post('/{id}', [CourseImagesController::class, 'addCourseImage']);
     });
+    
 };
 
 

@@ -18,7 +18,7 @@ const FuturedCourseCard = ({
   image,
   price,
   topics,
-  description,
+  short_description,
 }: FuturedCourseCardProps) => {
   return (
     <a href={`/shop/${id}`} className="w-full grid grid-cols-3 gap-4">
@@ -26,13 +26,19 @@ const FuturedCourseCard = ({
         <div className="w-60 lg:text-left text-center">
           <h2 className="text-2xl font-bold">{title}</h2>
         </div>
-        <p className="mt-4">{description}</p>
+        <p className="mt-4">
+          <div dangerouslySetInnerHTML={{ __html: short_description }} />
+        </p>
         <p className="mt-4">{price}</p>
         <TopicsDisplayer topics={topics.map((topic) => ({ name: topic }))} />
       </div>
       <div className="col-span-2 h-80">
         <img
-          src={image ? image : "https://via.placeholder.com/300"}
+          src={
+            image
+              ? `http://localhost:8080/${image}`
+              : "https://via.placeholder.com/300"
+          }
           alt={title}
           className="w-full h-full object-cover rounded-lg"
         />

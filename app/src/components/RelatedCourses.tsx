@@ -1,5 +1,6 @@
 import type { Course as CourseType } from "../types/types"
 import courseImg from "../assets/course.svg"
+import { apiClientUrl } from "../../use-cases/globals"
 
 interface RelatedCoursesProps {
   courses: CourseType[]
@@ -28,7 +29,9 @@ const RelatedCourses = ({ courses }: RelatedCoursesProps) => {
             <p className="text-sm">{course.price}</p>
           </div>
           <img
-            src={course.image ? course.image : courseImg.src}
+            src={
+              course.image ? `${apiClientUrl}/${course.image}` : courseImg.src
+            }
             alt={course.title}
             className="w-full h-52 object-cover rounded-lg"
           />

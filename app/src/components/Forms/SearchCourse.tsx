@@ -2,7 +2,7 @@ import toast, { Toaster } from "react-hot-toast"
 import { useState } from "react"
 import type { Course } from "../../types/types"
 import CourseTable from "../Tables/CourseTable"
-import { getCoursesByTitle } from "../../../use-cases/queries/courses"
+import { getCoursesByTitleClient } from "../../../use-cases/queries/courses"
 
 const SearchCourse = () => {
   const [searchTerm, setSearchTerm] = useState<string>("")
@@ -10,7 +10,7 @@ const SearchCourse = () => {
 
   const handleSearch = async () => {
     try {
-      const data = await getCoursesByTitle(searchTerm)
+      const data = await getCoursesByTitleClient(searchTerm)
       setCourses(data)
     } catch (error) {
       toast.error("Błąd podczas wyszukiwania użytkowników")

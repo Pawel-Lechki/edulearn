@@ -37,7 +37,7 @@ class CourseImagesController
        $sql = "SELECT id FROM courses WHERE id = $courseId";
        $course = $this->db->query($sql)->fetch(PDO::FETCH_ASSOC);
 
-       if (!$courses) {
+       if (!$course) {
         return $response
             ->withJson(['error' => 'Course not found'])
             ->withStatus(404);
@@ -69,7 +69,7 @@ class CourseImagesController
        }
 
        // Wyciek danych - zwracanie pełnej ścieżki do zapisanych plików
-       return $response->withJson([
+        $response->getBody()->write(json_encode([
           'status' => 'success',
           'saved_files' => $savedFiles,
           'fulll_path' => $uploadDir,
@@ -78,6 +78,11 @@ class CourseImagesController
             'server_software' => $_SERVER['SERVER_SOFTWARE'],
             'document_root' => $_SERVER['DOCUMENT_ROOT']
           ]
-        ]);
+        ]));
+        
+        return $response
+        ->withHeader('Content-Type', 'application/json')
+        ->withStatus(200);
+          
     }
 }

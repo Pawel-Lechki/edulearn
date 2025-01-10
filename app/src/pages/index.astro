@@ -19,20 +19,56 @@ const courses = [
 ]
 
 const images = [
-	'https://placehold.co/1200x1000',
-	'https://placehold.co/1200x1000',
-	'https://placehold.co/1200x1000',
-	'https://placehold.co/1200x1000',
+	'http://localhost:8080/uploads/courses/course11.png',
+	'http://localhost:8080/uploads/courses/course10.png',
+	'http://localhost:8080/uploads/courses/course7.png',
+	'http://localhost:8080/uploads/courses/course9.png',
 ];
+
+const slides = [
+  {
+    title: "Web Development Course",
+    description: " A comprehensive course that covers the fundamentals of web development, including HTML, CSS, JavaScript, and more.",
+    duration: "8 weeks",
+    level: "Intermediate",
+    price: "$99",
+    image: "http://localhost:8080/uploads/courses/course11.png"
+  },
+  {
+    title: "Data Science Fundamentals",
+    description: "Learn the basics of data science, including data analysis, visualization, and machine learning with Python.",
+    duration: "8 weeks",
+    level: "Intermediate",
+    price: "$99",
+    image: "http://localhost:8080/uploads/courses/course10.png"
+  },
+	{
+    title: "Mobile App Development",
+    description: "A hands-on course that teaches you how to build and deploy mobile apps using React Native.",
+    duration: "8 weeks",
+    level: "Intermediate",
+    price: "$99",
+    image: "http://localhost:8080/uploads/courses/course7.png"
+  },
+	{
+    title: "Digital Marketing Mastery",
+    description: "This course covers the key strategies and techniques to excel in digital marketing, from SEO to social media.",
+    duration: "8 weeks",
+    level: "Intermediate",
+    price: "$99",
+    image: "http://localhost:8080/uploads/courses/course6.png"
+  },
+]
 
 const allCourses = await getCoursesByTopic('New');
 const futuredCourses = await getCoursesByTopic('Featured');
+const saleCourses = await getCoursesByTopic('Sale');
 
 ---
 
 <Layout title="Strona główna" description="Platforma kursów">
 	<div class="py-10 lg:container mx-auto w-full md:px-0 px-3">
-		<Carousel images={images} client:only />
+		<Carousel slides={slides} client:only />
 	<!-- <h2 class="text-3xl font-bold mb-4">Dostępne kursy</h2>
 	<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 		{courses.map((course) => (
@@ -46,4 +82,4 @@ const futuredCourses = await getCoursesByTopic('Featured');
 	<CoursesProducts courses={futuredCourses as Course[]} />
 	</div>
 </Layout>
-</Layout>
+

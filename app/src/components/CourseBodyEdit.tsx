@@ -2,6 +2,7 @@ import { FaPencilAlt, FaUpload } from "react-icons/fa"
 import { updateCourse } from "../../use-cases/mutations/updateCourse"
 import toast from "react-hot-toast"
 import { useState } from "react"
+import { addCourseImage } from "../../use-cases/mutations/addCourseImagex"
 
 interface CourseBodyEditProps {
   course: {
@@ -25,15 +26,25 @@ const CourseBodyEdit = ({ course }: CourseBodyEditProps) => {
     }
   }
 
+  // const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files) {
+  //     setImages(Array.from(e.target.files))
+  //   }
+  //   if (e.target.files && e.target.files.length > 0) {
+  //     const formData = new FormData()
+  //     formData.append("image", e.target.files[0])
+  //     try {
+  //       await addCourseImage(course.id, { image: formData })
+  //       toast.success("Zaktualizowano obrazek")
+  //     } catch (error) {
+  //       toast.error("Wystąpił błąd podczas aktualizacji")
+  //     }
+  //   }
+  // }
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setImages(Array.from(e.target.files))
-    }
     if (e.target.files && e.target.files.length > 0) {
-      const formData = new FormData()
-      formData.append("image", e.target.files[0])
       try {
-        await updateCourse(course.id, { image: formData })
+        await addCourseImage(course.id, e.target.files[0])
         toast.success("Zaktualizowano obrazek")
       } catch (error) {
         toast.error("Wystąpił błąd podczas aktualizacji")

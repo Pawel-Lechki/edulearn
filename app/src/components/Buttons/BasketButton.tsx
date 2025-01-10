@@ -1,8 +1,7 @@
+import { useCartStore } from "../../store/cartStore"
+
 export const BasketButton = () => {
-  const basket =
-    typeof window !== "undefined" && localStorage.getItem("cart")
-      ? JSON.parse(localStorage.getItem("cart") || "{}")
-      : []
+  const items = useCartStore((state) => state.items)
 
   return (
     <div className="relative">
@@ -32,7 +31,7 @@ export const BasketButton = () => {
       </svg>
 
       <div className="w-5 h-5 absolute bg-text rounded-full text-primary text-center -right-2 -top-2 text-sm">
-        {basket.length}
+        {items.length}
       </div>
     </div>
   )

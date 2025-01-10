@@ -44,15 +44,9 @@ const CourseEdit = ({ course }: CourseProps) => {
   const handleSave = async (field: keyof EditableFields) => {
     try {
       await updateCourse(course.id, {
+        ...course,
         [field]: values[field],
-        id: 0,
-        title: "",
-        short_description: "",
-        description: "",
-        price: 0,
-        related: 0,
         user_id: Number(localStorage.getItem("userId")) || 0,
-        topics: [],
       })
       setEditing((prev) => ({ ...prev, [field]: false }))
       toast.success("Zaktualizowano pomyślnie")
@@ -122,11 +116,14 @@ const CourseEdit = ({ course }: CourseProps) => {
         <div>
           <p className="font-semibold text-sm">Koszt:</p>
           <div className="flex items-center gap-2">
-            {editing.title ? (
+            {editing.price ? (
               <input
                 value={values.title}
                 onChange={(e) =>
-                  setValues((prev) => ({ ...prev, title: e.target.value }))
+                  setValues((prev) => ({
+                    ...prev,
+                    price: Number(e.target.value),
+                  }))
                 }
                 onBlur={() => handleSave("title")}
                 autoFocus

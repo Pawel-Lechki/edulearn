@@ -4,7 +4,7 @@ export const addCourseImage = async (courseId: number, image: File) => {
   const formData = new FormData()
   formData.append("image", image)
   const response = await fetch(
-    `${apiClientUrl}/api/courses/${courseId}/images`,
+    `${apiClientUrl}/api/course-images/${courseId}`,
     {
       method: "POST",
       body: formData,

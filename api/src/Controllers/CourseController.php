@@ -95,103 +95,15 @@ class CourseController
   }
 
   public function createCourse(Request $request, Response $response): Response
-  {
-    $data = json_decode($request->getBody()->getContents(), true);
+{
+    $data = $request->getParsedBody() ?? [];
     $uploadedFiles = $request->getUploadedFiles();
 
     try {
-      $this->db->beginTransaction();
-
-      $imagePath = '';
-      if(isset($uploadedFiles['image']) && $uploadedFiles['image']->getError() === UPLOAD_ERR_OK) {
-        $uploadedFile = $uploadedFiles['image'];
-        $extinsion = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
-        $imageName = uniqid() . '_course.' . $extension;
-        $imagePath = '/uploads/courses/' .$imagePath;
-
-        if (!is_dir(__DIR__ . '/../../public/uploads/courses')) {
-          mkdir(__DIR__ . '/../../public/uploads/courses', 0777, true);
-        }
-
-        $uploadedFile->moveTo(__DIR__ . '/../../public' . $imagePath);
-      }
-
-      $sql = "INSERT INTO courses (title, short_description, description, price, image, user_id, related) 
-                    VALUES (:title, :short_description, :description, :price, :image, :user_id, :related)";
-      
-      $stmt = $this->db->prepare($sql);
-      $stmt->execute([
-                ':title' => $data['title'],
-                ':short_description' => $data['short_description'],
-                ':description' => $data['description'], // Przechowuje HTML
-                ':price' => $data['price'],
-                ':image' => $imagePath,
-                ':user_id' => $data['user_id'],
-                ':related' => $data['related']
-            ]);
-
-      $courseId = $this->db->lastInsertId();
-
-      // Dodawanie topics
-      if (isset($data['topics']) && is_array($data['topics'])) {
-        $topicSql = "INSERT INTO course_topics (course_id, topic_id) VALUES (:course_id, :topic_id)";
-                $topicStmt = $this->db->prepare($topicSql);
-                
-                foreach ($data['topics'] as $topicId) {
-                    $topicStmt->execute([
-                        ':course_id' => $courseId,
-                        ':topic_id' => $topicId
-                    ]);
-                }
-              }
-
-              $this->db->commit();
-
-              return $response->withJson([
-                'status' => 'success',
-                'message' => 'Course added successfully',
-                'courseId' => $courseId
-            ])->withStatus(201);
-
-          } catch (\PDOException $e) {
-              $this->db->rollBack();
-            
-            // Jeśli obraz został zapisany, usuń go
-            if (!empty($imagePath) && file_exists(__DIR__ . '/../../public' . $imagePath)) {
-                unlink(__DIR__ . '/../../public' . $imagePath);
-            }
-            
-            return $response->withJson([
-                'status' => 'error',
-                'message' => 'Failed to add course: ' . $e->getMessage()
-            ])->withStatus(500);
-          }
-    }
-
-    public function updateCourse(Request $request, Response $response, array $args): Response
-    {
-      $id = $args['id'];
-      $data = json_decode($request->getBody()->getContents(), true);
-      $uploadedFiles = $request->getUploadedFiles();
-
-      try {
         $this->db->beginTransaction();
 
-        $currentCourse = $this->getCourseById($id);
-        if (!$currentCourse) {
-          return $response->withJson([
-            'status' => 'error',
-            'message' => 'Course not found'
-          ])->withStatus(404);
-        }
-
-        $imagePath = $currentCourse['image'];
+        $imagePath = '';
         if (isset($uploadedFiles['image']) && $uploadedFiles['image']->getError() === UPLOAD_ERR_OK) {
-            // Usuń stary obrazek jeśli istnieje
-                if (!empty($currentCourse['image']) && file_exists(__DIR__ . '/../../public' . $currentCourse['image'])) {
-                    unlink(__DIR__ . '/../../public' . $currentCourse['image']);
-                }
-
             $uploadedFile = $uploadedFiles['image'];
             $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
             $imageName = uniqid() . '_course.' . $extension;
@@ -204,38 +116,29 @@ class CourseController
             $uploadedFile->moveTo(__DIR__ . '/../../public' . $imagePath);
         }
 
-        // Aktualizacja podstawowych danych kursu
-        $updateFields = [];
-        $params = [];
-
-        $allowedFields = ['title', 'short_description', 'description', 'price', 'user_id'];
-        foreach ($allowedFields as $field) {
-            if (isset($data[$field])) {
-                $updateFields[] = "$field = :$field";
-                $params[":$field"] = $data[$field];
-            }
-        }
-
-        // Dodaj obrazek do aktualizacji
-        $updatedFields[] = 'image = :image';
-        $params[':image'] = $imagePath;
-
-        $sql = "UPDATE courses SET " . implode(', ', $updateFields) . " WHERE id = :id";
-        $params[':id'] = $id;
+        $sql = "INSERT INTO courses (title, short_description, description, price, image, user_id, related) 
+                VALUES (:title, :short_description, :description, :price, :image, :user_id, :related)";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->execute($params);
+        $stmt->execute([
+            ':title' => $data['title'] ?? '',
+            ':short_description' => $data['short_description'] ?? '',
+            ':description' => $data['description'] ?? '',
+            ':price' => $data['price'] ?? 0,
+            ':image' => $imagePath,
+            ':user_id' => $data['user_id'] ?? null,
+            ':related' => $data['related'] ?? null
+        ]);
 
-        // Aktualizacja tematów
+        $courseId = $this->db->lastInsertId();
+
         if (isset($data['topics']) && is_array($data['topics'])) {
-            $this->db->prepare("DELETE FROM course_topics WHERE course_id = $id")->execute([$id]);
-
             $topicSql = "INSERT INTO course_topics (course_id, topic_id) VALUES (:course_id, :topic_id)";
             $topicStmt = $this->db->prepare($topicSql);
-
+            
             foreach ($data['topics'] as $topicId) {
                 $topicStmt->execute([
-                    ':course_id' => $id,
+                    ':course_id' => $courseId,
                     ':topic_id' => $topicId
                 ]);
             }
@@ -243,59 +146,34 @@ class CourseController
 
         $this->db->commit();
 
-        return $response->withJson([
+        $response->getBody()->write(json_encode([
             'status' => 'success',
-            'message' => 'Course updated successfully'
-        ])->withStatus(200);
-      } catch (\PDOException $e) {
-        $this->db->rollBack();
+            'message' => 'Course added successfully',
+            'courseId' => $courseId
+        ]));
+        
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withStatus(201);
 
-        // Jeśli obraz został zapisany, usuń go
+    } catch (\PDOException $e) {
+        $this->db->rollBack();
+        
         if (!empty($imagePath) && file_exists(__DIR__ . '/../../public' . $imagePath)) {
             unlink(__DIR__ . '/../../public' . $imagePath);
         }
-
-        return $response->withJson([
+        
+        $response->getBody()->write(json_encode([
             'status' => 'error',
-            'message' => 'Failed to update course: ' . $e->getMessage()
-        ])->withStatus(500);
-      }
-    }
-
-    public function deleteCourse(Request $request, Response $response, array $args): Response
-    {
-      $id = $args['id'];
-      $sql = "SELECT * FROM courses WHERE id = $id";
-      $stmt = $this->db->query($sql);
-      $course = $stmt->fetch(PDO::FETCH_ASSOC);
-      if (!$course) {
-        return $response->withJson([
-          'status' => 'error',
-          'message' => 'Course not found'
-        ])->withStatus(404);
-      }
-
-      try {
-        $this->db->beginTransaction();
-        $this->db->prepare("DELETE FROM course_topics WHERE course_id = $id")->execute();
-        $this->db->prepare("DELETE FROM courses WHERE id = $id")->execute();
-        $this->db->commit();
-        $response->getBody()->write(json_encode([
-          'status' => 'success',
-          'message' => 'Course deleted successfully'
+            'message' => 'Failed to add course: ' . $e->getMessage()
         ]));
+        
         return $response
-          ->withHeader('Content-Type', 'application/json')
-          ->withStatus(200);
-      } catch (\PDOException $e) {
-        $this->db->rollBack();
-        $response->getBody()->write(json_encode([
-          'status' => 'error',
-          'message' => 'Failed to delete course: ' . $e->getMessage()
-        ]));
-        return $response
-          ->withHeader('Content-Type', 'application/json')
-          ->withStatus(500);
-      }
+            ->withHeader('Content-Type', 'application/json')
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withStatus(500);
     }
+}
+
 }

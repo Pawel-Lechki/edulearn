@@ -1,20 +1,29 @@
 import { useEffect, useState } from "react"
 
-interface CarouselProps {
-  autoPlayInterval?: number
-  images: string[]
+interface Slide {
+  title: string
+  description: string
+  duration: string
+  level: string
+  price: string
+  image: string
 }
 
-const Carousel = ({ autoPlayInterval = 3000, images }: CarouselProps) => {
+interface CarouselProps {
+  autoPlayInterval?: number
+  slides: Slide[]
+}
+
+const Carousel = ({ autoPlayInterval = 3000, slides }: CarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0)
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % slides.length)
     }, autoPlayInterval)
 
     return () => clearInterval(timer)
-  }, [autoPlayInterval, images.length])
+  }, [autoPlayInterval, slides.length])
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index)
@@ -22,20 +31,20 @@ const Carousel = ({ autoPlayInterval = 3000, images }: CarouselProps) => {
 
   const goToPreviousSlide = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? slides.length - 1 : prevIndex - 1
     )
   }
 
   const goToNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      prevIndex === slides.length - 1 ? 0 : prevIndex + 1
     )
   }
 
   return (
     <div className="relative w-full max-w-8xl mx-auto">
       <div className="relative h-96 overflow-hidden rounded-lg mb-8">
-        {images.map((image, index) => (
+        {slides.map((slide, index) => (
           <div
             key={index}
             className={`absolute w-full h-full transition-transform duration-500 ease-in-out ${
@@ -44,25 +53,22 @@ const Carousel = ({ autoPlayInterval = 3000, images }: CarouselProps) => {
           >
             <div className="w-full h-full flex items-center justify-between p-8">
               <div className="w-1/3 bg-background1 p-8 rounded-lg shadow-lg mr-8">
-                <h2 className="text-3xl font-bold mb-4">
-                  Course Title {index + 1}
-                </h2>
+                <h2 className="text-3xl font-bold mb-4">{slide.title}</h2>
                 <p className="text-lg text-gray-600 mb-4">
-                  Course description goes here. This is a detailed explanation
-                  of what students will learn in this course.
+                  {slide.description}
                 </p>
                 <div className="space-y-2">
                   <div className="flex items-center">
                     <span className="font-semibold mr-2">Duration:</span>
-                    <span>8 weeks</span>
+                    <span>{slide.duration}</span>
                   </div>
                   <div className="flex items-center">
                     <span className="font-semibold mr-2">Level:</span>
-                    <span>Intermediate</span>
+                    <span>{slide.level}</span>
                   </div>
                   <div className="flex items-center">
                     <span className="font-semibold mr-2">Price:</span>
-                    <span>$99</span>
+                    <span>{slide.price}</span>
                   </div>
                 </div>
                 <button className="mt-6 bg-buttonPrimary text-white font-semibold px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
@@ -71,8 +77,8 @@ const Carousel = ({ autoPlayInterval = 3000, images }: CarouselProps) => {
               </div>
               <div className="w-2/3 h-full">
                 <img
-                  src={image}
-                  alt={`Course ${index + 1}`}
+                  src={slide.image}
+                  alt={slide.title}
                   className="w-full h-full object-cover rounded-lg"
                 />
               </div>
@@ -95,7 +101,7 @@ const Carousel = ({ autoPlayInterval = 3000, images }: CarouselProps) => {
       </button>
 
       <div className="flex justify-center gap-2 mt-4">
-        {images.map((_, index) => (
+        {slides.map((_, index) => (
           <button
             key={index}
             className={`h-1 transition-all duration-300 ${

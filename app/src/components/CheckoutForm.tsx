@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react"
-import type { CourseVariant } from "../types/types"
+import { useCartStore } from "../store/cartStore"
 
 const CheckoutForm = () => {
+  const items = useCartStore((state) => state.items)
+  const total =
+    items && items.length > 0
+      ? Number(items.reduce((sum, item) => sum + item.price, 0)).toFixed(2)
+      : "0.00"
+
   const [state, setState] = useState({
     firstName: "",
     lastName: "",
@@ -19,16 +25,6 @@ const CheckoutForm = () => {
   }, [])
 
   const { firstName, lastName, email, street, city, postalCode } = state
-
-  const cart =
-    typeof window !== "undefined" && localStorage.getItem("cart")
-      ? JSON.parse(localStorage.getItem("cart") || "{}")
-      : []
-
-  const total = cart?.reduce(
-    (amount: number, item: CourseVariant) => item.price + amount,
-    0
-  )
 
   return (
     <div className="max-w-2xl mx-auto p-6">
