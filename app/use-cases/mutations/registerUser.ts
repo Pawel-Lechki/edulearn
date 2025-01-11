@@ -1,9 +1,11 @@
 import { apiClientUrl } from "../globals"
 
 export const registerUser = async (
-  name: string,
+  username: string,
   email: string,
-  password: string
+  password: string,
+  role: string = "user",
+  newsletter: boolean = false
 ) => {
   const response = await fetch(`${apiClientUrl}/api/users`, {
     method: "POST",
@@ -12,10 +14,9 @@ export const registerUser = async (
       Accept: "application/json",
     },
     credentials: "include",
-    body: JSON.stringify({ name, email, password }),
+    body: JSON.stringify({ username, email, password, role }),
   })
 
   const data = await response.json()
-
   return data
 }

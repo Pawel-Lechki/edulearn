@@ -26,7 +26,9 @@ const RegisterForm = () => {
       const data = await registerUser(
         formData.username,
         formData.email,
-        formData.password
+        formData.password,
+        formData.role,
+        formData.newsletter
       )
 
       if (data) {
