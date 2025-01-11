@@ -15,7 +15,9 @@ const { courseId } = Astro.params;
 
 const courseData = await getCourseById(courseId);
 ---
-
+<!-- <pre>
+  {JSON.stringify(courseData, null, 2)}
+</pre> -->
 <Layout title={courseData.title} description={courseData.title} >
   <div class="lg:container mx-auto w-full lg:px-0 px-5">
     {

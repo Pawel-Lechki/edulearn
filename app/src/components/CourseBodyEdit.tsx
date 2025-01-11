@@ -80,7 +80,7 @@ const CourseBodyEdit = ({ course }: CourseBodyEditProps) => {
           <input
             type="file"
             multiple
-            accept="image/*"
+            // accept="image/*"
             onChange={handleImageUpload}
             className="hidden"
           />

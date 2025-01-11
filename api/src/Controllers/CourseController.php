@@ -176,4 +176,41 @@ class CourseController
     }
 }
 
+public function deleteCourse(Request $request, Response $response, array $args): Response
+    {
+      $id = $args['id'];
+      $sql = "SELECT * FROM courses WHERE id = $id";
+      $stmt = $this->db->query($sql);
+      $course = $stmt->fetch(PDO::FETCH_ASSOC);
+      if (!$course) {
+        return $response->withJson([
+          'status' => 'error',
+          'message' => 'Course not found'
+        ])->withStatus(404);
+      }
+
+      try {
+        $this->db->beginTransaction();
+        $this->db->prepare("DELETE FROM course_topics WHERE course_id = $id")->execute();
+        $this->db->prepare("DELETE FROM courses WHERE id = $id")->execute();
+        $this->db->commit();
+        $response->getBody()->write(json_encode([
+          'status' => 'success',
+          'message' => 'Course deleted successfully'
+        ]));
+        return $response
+          ->withHeader('Content-Type', 'application/json')
+          ->withStatus(200);
+      } catch (\PDOException $e) {
+        $this->db->rollBack();
+        $response->getBody()->write(json_encode([
+          'status' => 'error',
+          'message' => 'Failed to delete course: ' . $e->getMessage()
+        ]));
+        return $response
+          ->withHeader('Content-Type', 'application/json')
+          ->withStatus(500);
+      }
+    }
+
 }
